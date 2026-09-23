@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vasool Collection Tracker — User Guide</title>
+    <meta name="description" content="Complete Vasool Collection Tracker user guide — collections, customers, loans, EMI collection, reports, backups and more. Available in English, Tamil, Hindi, Malayalam, Telugu and Kannada.">
+    <link rel="icon" type="image/png" href="vct.png">
+    <link rel="apple-touch-icon" href="vct.png">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #11766D;
+            --primary-light: #16A396;
+            --primary-soft: rgba(17, 118, 109, 0.08);
+            --accent: #D9910F;
+            --dark: #13201E;
+            --dark-blue: #062A26;
+            --light: #F4FAF8;
+            --gray: #64748B;
+            --border: #E2E8F0;
+            --gradient: linear-gradient(135deg, #11766D 0%, #16A396 100%);
+            --gradient-accent: linear-gradient(135deg, #D9910F 0%, #F5B72E 100%);
+            --sidebar-w: 300px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: var(--dark);
+            line-height: 1.7;
+            background: var(--light);
+        }
+
+        h1, h2, h3, h4, .logo { font-family: 'Sora', 'DM Sans', -apple-system, sans-serif; }
+
+        a { color: var(--primary); }
+
+        /* ---------- Header ---------- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(17, 118, 109, 0.1);
+        }
+
+        .topbar {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 14px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .app-logo { width: 40px; height: 40px; border-radius: 11px; }
+
+        .logo {
+            font-size: 22px;
+            line-height: 1.05;
+            font-weight: 800;
+            color: #0B5F58;
+        }
+
+        .logo small {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--primary-light);
+        }
+
+        .guide-chip {
+            background: var(--primary-soft);
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 50px;
+            white-space: nowrap;
+        }
+
+        .topbar-spacer { flex: 1; }
+
+        .home-link {
+            text-decoration: none;
+            color: var(--gray);
+            font-weight: 500;
+            font-size: 15px;
+            white-space: nowrap;
+        }
+        .home-link:hover { color: var(--primary); }
+
+        /* Language switcher */
+        .lang-switch { position: relative; }
+
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            border: 1.5px solid var(--border);
+            border-radius: 50px;
+            padding: 8px 16px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--dark);
+            cursor: pointer;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .lang-btn:hover { border-color: var(--primary); box-shadow: 0 2px 10px rgba(17,118,109,0.15); }
+        .lang-btn .globe { font-size: 17px; }
+        .lang-btn .caret { font-size: 11px; color: var(--gray); }
+
+        .lang-menu {
+            position: absolute;
+            right: 0;
+            top: calc(100% + 8px);
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            box-shadow: 0 12px 40px rgba(6, 42, 38, 0.18);
+            padding: 6px;
+            min-width: 180px;
+            display: none;
+            z-index: 1200;
+        }
+        .lang-menu.open { display: block; animation: menuIn 0.15s ease-out; }
+        @keyframes menuIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+
+        .lang-menu button {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 9px;
+            font-family: inherit;
+            font-size: 15px;
+            color: var(--dark);
+            cursor: pointer;
+            text-align: left;
+        }
+        .lang-menu button:hover { background: var(--primary-soft); }
+        .lang-menu button.active { background: var(--primary-soft); color: var(--primary); font-weight: 700; }
+        .lang-menu button.active::after { content: '✓'; font-weight: 800; }
+
+        /* ---------- Hero strip ---------- */
+        .guide-hero {
+            background: linear-gradient(135deg, #062A26 0%, #13201E 100%);
+            color: white;
+            padding: 44px 0 48px;
+            position: relative;
+            overflow: hidden;
+        }
+        .guide-hero::before {
+            content: '';
+            position: absolute;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(22, 163, 150, 0.18) 0%, transparent 70%);
+            top: -250px; right: -150px;
+        }
+        .guide-hero-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+        .guide-hero h1 {
+            font-size: 34px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .guide-hero p { color: rgba(255,255,255,0.75); font-size: 17px; }
+        .guide-hero .version-tag {
+            display: inline-block;
+            margin-top: 14px;
+            background: rgba(22, 163, 150, 0.18);
+            border: 1px solid rgba(22, 163, 150, 0.4);
+            color: #8FE0D2;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 4px 14px;
+            border-radius: 50px;
+        }
+
+        /* ---------- Layout ---------- */
+        .layout {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 36px 20px 80px;
+            display: grid;
+            grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+            gap: 44px;
+            align-items: start;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: sticky;
+            top: 84px;
+            max-height: calc(100vh - 104px);
+            overflow-y: auto;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px 12px;
+            scrollbar-width: thin;
+        }
+        .sidebar h3 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--gray);
+            padding: 4px 14px 10px;
+        }
+        .toc { list-style: none; }
+        .toc a {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            padding: 8px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--dark);
+            font-size: 14.5px;
+            font-weight: 500;
+            transition: background 0.15s, color 0.15s;
+            border-left: 3px solid transparent;
+        }
+        .toc a .toc-num {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--gray);
+            min-width: 18px;
+            font-variant-numeric: tabular-nums;
+        }
+        .toc a:hover { background: var(--primary-soft); color: var(--primary); }
+        .toc a.active {
+            background: var(--primary-soft);
+            color: var(--primary);
+            font-weight: 700;
+            border-left-color: var(--primary);
+        }
+        .toc a.active .toc-num { color: var(--primary); }
+
+        /* Content */
+        .content { min-width: 0; }
+
+        .guide-section {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 36px 40px;
+            margin-bottom: 28px;
+            scroll-margin-top: 90px;
+        }
+
+        .guide-section > h2 {
+            font-size: 26px;
+            font-weight: 800;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            line-height: 1.35;
+        }
+        .sec-num {
+            flex-shrink: 0;
+            width: 40px; height: 40px;
+            border-radius: 12px;
+            background: var(--gradient);
+            color: white;
+            font-size: 17px;
+            font-weight: 800;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Sora', sans-serif;
+        }
+
+        .guide-section h3 {
+            font-size: 19px;
+            font-weight: 700;
+            margin: 28px 0 12px;
+            color: var(--dark);
+        }
+        .guide-section h4 { font-size: 16px; font-weight: 700; margin: 20px 0 8px; }
+        .guide-section p { margin-bottom: 14px; color: #334155; }
+        .guide-section ul, .guide-section ol { margin: 0 0 16px 22px; color: #334155; }
+        .guide-section li { margin-bottom: 8px; }
+        .guide-section li > ul, .guide-section li > ol { margin-top: 8px; margin-bottom: 8px; }
+        .guide-section strong { color: var(--dark); }
+
+        .guide-section code {
+            background: var(--primary-soft);
+            color: var(--primary);
+            padding: 2px 7px;
+            border-radius: 6px;
+            font-size: 0.9em;
+            font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        }
+
+        /* Tables */
+        .table-wrap { overflow-x: auto; margin: 16px 0 20px; border: 1px solid var(--border); border-radius: 12px; }
+        .guide-section table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 14.5px; }
+        .guide-section th {
+            background: var(--dark-blue);
+            color: white;
+            text-align: left;
+            padding: 12px 16px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+        .guide-section td { padding: 11px 16px; border-top: 1px solid var(--border); color: #334155; vertical-align: top; }
+        .guide-section tbody tr:nth-child(even) { background: #F4FAF8; }
+        .guide-section td.center, .guide-section th.center { text-align: center; }
+        .tick { color: #16A34A; font-weight: 800; }
+        .dash { color: #CBD5E1; font-weight: 700; }
+
+        /* Callouts */
+        .callout {
+            display: flex;
+            gap: 12px;
+            background: #FFF7ED;
+            border: 1px solid #FED7AA;
+            border-left: 4px solid var(--accent);
+            border-radius: 12px;
+            padding: 14px 18px;
+            margin: 16px 0;
+            font-size: 15px;
+            color: #7C2D12;
+        }
+        .callout.tip {
+            background: #F0FDFA;
+            border-color: #99F6E4;
+            border-left-color: var(--primary);
+            color: #134E4A;
+        }
+        .callout .ico { font-size: 18px; line-height: 1.5; }
+        .callout p { margin: 0; color: inherit; }
+
+        /* Plan badges */
+        .badge {
+            display: inline-block;
+            font-size: 11.5px;
+            font-weight: 800;
+            letter-spacing: 0.4px;
+            padding: 2px 10px;
+            border-radius: 50px;
+            vertical-align: middle;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .badge.premium { background: rgba(17, 118, 109, 0.12); color: var(--primary); }
+        .badge.diamond { background: rgba(124, 58, 237, 0.12); color: #7C3AED; }
+        .badge.base { background: rgba(100, 116, 139, 0.14); color: #475569; }
+
+        /* App flow diagram */
+        .flow {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin: 20px 0;
+        }
+        .flow-step {
+            display: flex;
+            gap: 16px;
+            position: relative;
+            padding-bottom: 22px;
+        }
+        .flow-step:last-child { padding-bottom: 0; }
+        .flow-step::before {
+            content: '';
+            position: absolute;
+            left: 19px;
+            top: 40px;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(var(--primary-light), rgba(22,163,150,0.25));
+        }
+        .flow-step:last-child::before { display: none; }
+        .flow-dot {
+            flex-shrink: 0;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(17, 118, 109, 0.3);
+            z-index: 1;
+        }
+        .flow-body { padding-top: 5px; }
+        .flow-body h4 { margin: 0 0 4px; font-size: 16px; }
+        .flow-body p { margin: 0; font-size: 14.5px; color: var(--gray); }
+
+        /* Pricing mini-cards inside guide */
+        .plan-mini-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 18px 0;
+        }
+        .plan-mini {
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            background: #fff;
+        }
+        .plan-mini.highlight { border-color: var(--primary); box-shadow: 0 6px 20px rgba(17,118,109,0.14); }
+        .plan-mini h4 { margin: 0 0 6px; font-size: 17px; }
+        .plan-mini .pm-price { font-family: 'Sora', sans-serif; font-size: 24px; font-weight: 800; color: var(--primary); }
+        .plan-mini .pm-price span { font-size: 13px; color: var(--gray); font-weight: 500; }
+        .plan-mini .pm-year { font-size: 13.5px; color: var(--gray); margin-top: 4px; }
+
+        /* FAQ */
+        details.faq {
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            background: #fff;
+            overflow: hidden;
+        }
+        details.faq summary {
+            cursor: pointer;
+            padding: 15px 18px;
+            font-weight: 700;
+            font-size: 15.5px;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+        }
+        details.faq summary::-webkit-details-marker { display: none; }
+        details.faq summary::after { content: '+'; font-size: 20px; color: var(--primary); font-weight: 600; flex-shrink: 0; }
+        details.faq[open] summary::after { content: '−'; }
+        details.faq[open] summary { color: var(--primary); }
+        details.faq .faq-body { padding: 0 18px 15px; color: #334155; font-size: 15px; }
+        details.faq .faq-body p { margin-bottom: 8px; }
+
+        /* Footer */
+        footer {
+            background: var(--dark-blue);
+            color: rgba(255,255,255,0.7);
+            padding: 34px 20px;
+            text-align: center;
+            font-size: 14.5px;
+        }
+        footer a { color: #8FE0D2; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+        footer .foot-links { margin-top: 10px; display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; }
+
+        /* Back-to-top */
+        #topBtn {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            width: 46px; height: 46px;
+            border-radius: 50%;
+            border: none;
+            background: var(--gradient);
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(17,118,109,0.4);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s, transform 0.25s;
+            transform: translateY(8px);
+            z-index: 900;
+        }
+        #topBtn.show { opacity: 1; pointer-events: auto; transform: translateY(0); }
+
+        /* Mobile TOC toggle */
+        #tocToggle {
+            display: none;
+            position: fixed;
+            left: 22px;
+            bottom: 22px;
+            z-index: 950;
+            border: none;
+            background: var(--dark-blue);
+            color: white;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 13px 22px;
+            border-radius: 50px;
+            box-shadow: 0 8px 24px rgba(6,42,38,0.45);
+            cursor: pointer;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(6,42,38,0.5);
+            z-index: 1050;
+        }
+        .sidebar-backdrop.show { display: block; }
+
+        /* Loading state */
+        #loading {
+            padding: 80px 20px;
+            text-align: center;
+            color: var(--gray);
+            font-size: 16px;
+        }
+        .spinner {
+            width: 36px; height: 36px;
+            border: 4px solid var(--primary-soft);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            margin: 0 auto 16px;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 1024px) {
+            .layout { grid-template-columns: 1fr; }
+
+            .sidebar {
+                position: fixed;
+                left: 0; top: 0; bottom: 0;
+                width: min(320px, 85vw);
+                max-height: none;
+                border-radius: 0 18px 18px 0;
+                z-index: 1100;
+                transform: translateX(-105%);
+                transition: transform 0.28s ease;
+                padding-top: 24px;
+            }
+            .sidebar.open { transform: translateX(0); }
+            #tocToggle { display: inline-flex; }
+        }
+
+        @media (max-width: 640px) {
+            .guide-hero h1 { font-size: 26px; }
+            .guide-hero p { font-size: 15px; }
+            .guide-section { padding: 24px 20px; border-radius: 14px; }
+            .guide-section > h2 { font-size: 21px; }
+            .home-link { display: none; }
+            .guide-chip { display: none; }
+            .logo { font-size: 19px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="topbar">
+            <a class="logo-box" href="index.html">
+                <img src="vct.png" alt="Vasool Collection Tracker logo" class="app-logo">
+                <span class="logo">Vasool<small>Collection Tracker</small></span>
+            </a>
+            <span class="guide-chip" data-ui="guideLabel">User Guide</span>
+            <div class="topbar-spacer"></div>
+            <a class="home-link" href="index.html" data-ui="backHome">← Back to Home</a>
+            <div class="lang-switch">
+                <button class="lang-btn" id="langBtn" aria-haspopup="listbox" aria-expanded="false">
+                    <span class="globe">🌐</span>
+                    <span id="langCurrent">English</span>
+                    <span class="caret">▼</span>
+                </button>
+                <div class="lang-menu" id="langMenu" role="listbox"></div>
+            </div>
+        </div>
+    </header>
+
+    <section class="guide-hero">
+        <div class="guide-hero-inner">
+            <h1 data-ui="pageTitle">Vasool Collection Tracker User Guide</h1>
+            <p data-ui="tagline">Simple loan manager for tracking EMIs &amp; repayments</p>
+            <span class="version-tag" data-ui="version">Covers Vasool Collection Tracker v1.0</span>
+        </div>
+    </section>
+
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <h3 data-ui="contents">Contents</h3>
+            <ul class="toc" id="toc"></ul>
+        </aside>
+        <main class="content" id="content">
+            <div id="loading"><div class="spinner"></div><span>Loading…</span></div>
+        </main>
+    </div>
+
+    <div class="sidebar-backdrop" id="backdrop"></div>
+    <button id="tocToggle">☰ <span data-ui="contents">Contents</span></button>
+    <button id="topBtn" aria-label="Back to top">↑</button>
+
+    <footer>
+        <div data-ui="footerNote">© 2026 Vasool Collection Tracker. Made with ❤️ for Indian finance professionals.</div>
+        <div class="foot-links">
+            <a href="index.html" data-ui="backHome">← Back to Home</a>
+            <a href="index.html#pricing" data-ui="pricingLink">Pricing</a>
+            <a href="https://play.google.com/store/apps/details?id=com.ks.vasool" target="_blank" data-ui="download">Download App</a>
+        </div>
+    </footer>
+
+    <script>
+    (function () {
+        var LANGS = [
+            { code: 'en', label: 'English' },
+            { code: 'ta', label: 'தமிழ்' },
+            { code: 'hi', label: 'हिंदी' },
+            { code: 'ml', label: 'മലയാളം' },
+            { code: 'te', label: 'తెలుగు' },
+            { code: 'kn', label: 'ಕನ್ನಡ' }
+        ];
+        var VALID = LANGS.map(function (l) { return l.code; });
+
+        var content = document.getElementById('content');
+        var toc = document.getElementById('toc');
+        var langMenu = document.getElementById('langMenu');
+        var langBtn = document.getElementById('langBtn');
+        var langCurrent = document.getElementById('langCurrent');
+        var sidebar = document.getElementById('sidebar');
+        var backdrop = document.getElementById('backdrop');
+        var tocToggle = document.getElementById('tocToggle');
+        var topBtn = document.getElementById('topBtn');
+        var observer = null;
+        var currentLang = null;
+
+        function pickInitialLang() {
+            var p = new URLSearchParams(location.search).get('lang');
+            if (p && VALID.indexOf(p) !== -1) return p;
+            var s = null;
+            try { s = localStorage.getItem('vct-guide-lang'); } catch (e) {}
+            if (s && VALID.indexOf(s) !== -1) return s;
+            return 'en';
+        }
+
+        // Build language menu
+        LANGS.forEach(function (l) {
+            var b = document.createElement('button');
+            b.type = 'button';
+            b.textContent = l.label;
+            b.setAttribute('data-lang', l.code);
+            b.setAttribute('role', 'option');
+            b.addEventListener('click', function () {
+                closeMenu();
+                if (l.code !== currentLang) loadLang(l.code, true);
+            });
+            langMenu.appendChild(b);
+        });
+
+        function closeMenu() { langMenu.classList.remove('open'); langBtn.setAttribute('aria-expanded', 'false'); }
+        langBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var open = langMenu.classList.toggle('open');
+            langBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        document.addEventListener('click', closeMenu);
+
+        function showLoading() {
+            content.innerHTML = '<div id="loading"><div class="spinner"></div><span>Loading…</span></div>';
+        }
+
+        function loadLang(code, updateUrl) {
+            showLoading();
+            var old = document.getElementById('guide-data');
+            if (old) old.remove();
+            window.GUIDE_CONTENT = null;
+
+            var s = document.createElement('script');
+            s.id = 'guide-data';
+            s.src = 'guide-content/' + code + '.js';
+            s.onload = function () {
+                if (window.GUIDE_CONTENT) {
+                    currentLang = code;
+                    try { localStorage.setItem('vct-guide-lang', code); } catch (e) {}
+                    if (updateUrl && history.replaceState) {
+                        var u = new URL(location.href);
+                        u.searchParams.set('lang', code);
+                        history.replaceState(null, '', u);
+                    }
+                    render(window.GUIDE_CONTENT);
+                } else {
+                    fail(code);
+                }
+            };
+            s.onerror = function () { fail(code); };
+            document.body.appendChild(s);
+        }
+
+        function fail(code) {
+            if (code !== 'en') { loadLang('en', false); return; }
+            content.innerHTML = '<div id="loading">Could not load the guide. Please refresh the page.</div>';
+        }
+
+        function render(data) {
+            document.documentElement.lang = data.lang;
+            document.title = data.ui.docTitle;
+
+            // UI strings
+            document.querySelectorAll('[data-ui]').forEach(function (el) {
+                var k = el.getAttribute('data-ui');
+                if (data.ui[k]) el.textContent = data.ui[k];
+            });
+
+            // Language button label
+            var match = LANGS.filter(function (l) { return l.code === data.lang; })[0];
+            langCurrent.textContent = match ? match.label : data.lang;
+            langMenu.querySelectorAll('button').forEach(function (b) {
+                b.classList.toggle('active', b.getAttribute('data-lang') === data.lang);
+            });
+
+            // TOC
+            toc.innerHTML = '';
+            data.sections.forEach(function (sec) {
+                var li = document.createElement('li');
+                var a = document.createElement('a');
+                a.href = '#' + sec.id;
+                a.innerHTML = '<span class="toc-num">' + sec.num + '</span><span>' + sec.title + '</span>';
+                a.addEventListener('click', function () { closeSidebar(); });
+                li.appendChild(a);
+                toc.appendChild(li);
+            });
+
+            // Sections
+            var html = '';
+            data.sections.forEach(function (sec) {
+                html += '<section class="guide-section" id="' + sec.id + '">' +
+                        '<h2><span class="sec-num">' + sec.num + '</span><span>' + sec.title + '</span></h2>' +
+                        sec.html +
+                        '</section>';
+            });
+            content.innerHTML = html;
+
+            setupScrollSpy();
+
+            // Honor hash after render
+            if (location.hash) {
+                var t = document.querySelector(location.hash);
+                if (t) setTimeout(function () { t.scrollIntoView(); }, 50);
+            }
+        }
+
+        function setupScrollSpy() {
+            if (observer) observer.disconnect();
+            var links = {};
+            toc.querySelectorAll('a').forEach(function (a) {
+                links[a.getAttribute('href').slice(1)] = a;
+            });
+            observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (en) {
+                    if (en.isIntersecting) {
+                        Object.keys(links).forEach(function (k) { links[k].classList.remove('active'); });
+                        var a = links[en.target.id];
+                        if (a) {
+                            a.classList.add('active');
+                            if (window.innerWidth > 1024) {
+                                var st = sidebar;
+                                var ar = a.getBoundingClientRect();
+                                var sr = st.getBoundingClientRect();
+                                if (ar.top < sr.top + 40 || ar.bottom > sr.bottom - 40) {
+                                    a.scrollIntoView({ block: 'nearest' });
+                                }
+                            }
+                        }
+                    }
+                });
+            }, { rootMargin: '-15% 0px -70% 0px' });
+            content.querySelectorAll('.guide-section').forEach(function (s) { observer.observe(s); });
+        }
+
+        // Mobile sidebar
+        function openSidebar() { sidebar.classList.add('open'); backdrop.classList.add('show'); }
+        function closeSidebar() { sidebar.classList.remove('open'); backdrop.classList.remove('show'); }
+        tocToggle.addEventListener('click', openSidebar);
+        backdrop.addEventListener('click', closeSidebar);
+
+        // Back to top
+        window.addEventListener('scroll', function () {
+            topBtn.classList.toggle('show', window.scrollY > 600);
+        }, { passive: true });
+        topBtn.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+        loadLang(pickInitialLang(), false);
+    })();
+    </script>
+</body>
+</html>
